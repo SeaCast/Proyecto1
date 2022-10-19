@@ -5,14 +5,18 @@
 package proyecto1;
 
 /**
- * Clase Nodos, todos sus parametros son genericos para permitir su uso en diversos tipos de listas
+ *
  * @author Sebastián
- * @version 16/10/2022
+ * @version 19/10/2022
+ * @param data Dato del nodo 
+ * @param pNext siguiente nodo
+ * @param pVert siguiente adyacencia
+ * 
  */
 public class Node<T> {
     private T data;
-    private Object pNext;
-    private Object pPrev;
+    private Node pNext;
+    private Node pVert;
 
     /**
      * @return the data
@@ -31,47 +35,41 @@ public class Node<T> {
     /**
      * @return the pNext
      */
-    public Object getpNext() {
+    public Node getpNext() {
         return pNext;
     }
 
     /**
      * @param pNext the pNext to set
      */
-    public void setpNext(T pNext) {
+    public void setpNext(Node pNext) {
         this.pNext = pNext;
     }
 
     /**
-     * @return the pPrevious
+     * @return the pVert
      */
-    public Object getpPrev() {
-        return pPrev;
+    public Node getpVert() {
+        return pVert;
     }
 
     /**
-     * @param pPrevious the pPrevious to set
+     * @param pVert the pVert to set
      */
-    public void setpPrev(T pPrev) {
-        this.pPrev = pPrev;
+    public void setpVert(Node pVert) {
+        this.pVert = pVert;
     }
-    
+
     /**
-     * Crea un nuevo nodo
-     * @param data dato que contiene el nodo
-     * @param key variable que determina si el nodo sera utilizado en listas enlazadas o listas de adyacencia
+     * Constructor del nodo
+     * @param data Dato a ingresar
      */
     
-    public Node(T data, String key) {
-        if(key.contains("L")){
-            this.data = data;
-            this.pNext = null;
-        }else{
-            this.data = data;
-            this.pNext = this.pPrev = -1;
-        }
-    }
-    
+    public Node(T data) {
+        this.data = data;
+        this.pNext = null;
+        this.pVert = null;
+    }    
     
     
 }

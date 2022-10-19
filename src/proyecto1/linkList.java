@@ -5,14 +5,20 @@
 package proyecto1;
 
 /**
- *
+ * Clase de listas enlazadas
  * @author Sebastián
- * @version 16/10/2022
+ * @version 19/10/2022
+ * @param lFirst Primer valor de la lista
+ * @param lLast Ultimo valor de la lista
+ * @param lSize Tamaño actual de la lista
+ * @param lMax Tamaño maximo de la lista, depende de la cantidad de vertices a utilizar
+ * 
  */
 public class linkList {
     private Node lFirst;
     private Node lLast;
     private int lSize;
+    private int lMax;
 
     /**
      * @return the lFirst
@@ -56,14 +62,34 @@ public class linkList {
         this.lSize = lSize;
     }
 
-    public linkList() {
-        this.lFirst = this.lLast = null;
-        this.lSize = 0;
+    /**
+     * @return the lMax
+     */
+    public int getlMax() {
+        return lMax;
+    }
+
+    /**
+     * @param lMax the lMax to set
+     */
+    public void setlMax(int lMax) {
+        this.lMax = lMax;
     }
     
     /**
-     * Verifica si la lista esta vacia
-     * @return el estado de la lista, si es vacia o no
+     * Constructor de la lista, inicia vacio excepto por el parametro max
+     * @param max 
+     */
+    
+    public linkList(int max) {
+        this.lFirst = this.lLast = null;
+        this.lSize = 0;
+        this.lMax = max;
+    }
+    
+    /**
+     * Verificacion de vacio
+     * @return Retorna el estado de la lista, si es vacia o no
      */
     
     public boolean isEmpty(){
@@ -71,7 +97,7 @@ public class linkList {
     }
     
     /**
-     * Vacia la lista
+     * Funcion que vacia la lista
      */
     
     public void emptyList(){
@@ -80,44 +106,44 @@ public class linkList {
     }
     
     /**
-     * Inserta un nodo al inicio de la lista
-     * @param data nodo a insertar
+     * Inserta un elemento al inicio de la lista
+     * @param data Nodo a insertar
      */
     
     public void insertStart(Node data){
         if(isEmpty()){
             this.lFirst = this.lLast = data;
         }else{
-            data.setpNext(this.lFirst);
+            data.setpVert(this.lFirst);
             this.lFirst = data;
         }
         this.lSize++;
     }
     
     /**
-     * Inseta un nodo al final de la lista
-     * @param data nodo a insertar
+     * Inserta un elemento al final de la lista
+     * @param data Nodo a insertar
      */
     
     public void insertEnd(Node data){
         if(isEmpty()){
             this.lFirst = this.lLast = data;
         }else{
-            this.lLast.setpNext(data);
+            this.lLast.setpVert(data);
             this.lLast = data;
         }
         this.lSize++;
     }
     
     /**
-     * Borra el nodo al inicio de la lista
-     * @return el nodo borrado
+     * Elimina el elemento al inicio de la lista
+     * @return elemento elminado
      */
     
     public Node delStart(){
         if(!isEmpty()){
             Node aux = this.lFirst;
-            this.lFirst = Node.class.cast(this.lFirst.getpNext());
+            this.lFirst = this.lFirst.getpVert();
             return aux;
         }else{
             return null;
@@ -125,8 +151,8 @@ public class linkList {
     }
  
     /**
-     * Borra el nodo al final de la lista
-     * @return el nodo borrado
+     * Elimina el elemento al final de la lista
+     * @return elemento eliminado
      */
     
     public Node delEnd(){
@@ -134,14 +160,33 @@ public class linkList {
             Node aux = this.lFirst;
             Node previousLast = this.lLast;
             for(int i = 0; i < this.lSize - 1; i++){
-                aux = Node.class.cast(aux.getpNext());
+                aux = aux.getpVert();
             }
-            aux.setpNext(null);
+            aux.setpVert(null);
             this.lLast = aux;
             return previousLast;
         }else{
             return null;
         }   
     }
+
+    /**
+     * Busca la posicion del vertice en la lista
+     * @param Target Vertice a buscar
+     * @return Direccion del nodo buscado, sera null si no existe
+     */
     
+    public Node searchVertex(char Target){
+        if(!isEmpty()){
+            Node aux = this.lFirst;
+            for(int i = 0; i < this.lSize; i++){
+                if((char) aux.getData() == Target){
+                    return aux;
+            }else{
+                aux = aux.getpVert();}
+            }
+        return null;}
+        
+    return null;}
 }
+

@@ -5,26 +5,30 @@
 package proyecto1;
 
 /**
- * Clase grafos, crea grafos utilizando listas de adyacencia
+ *
  * @author Sebastián
- * @version 16/10/2022
+ * @version 19/10/2022
+ * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
+ * @param rows filas que tendra el laberinto
+ * @param columns columnas que tendra el laberinto
+ * 
  */
 public class Graph {
-    private arrayList vertexs;
+    private linkList vertexs;
     private int rows;
     private int columns;
 
     /**
      * @return the vertexs
      */
-    public arrayList getVertexs() {
+    public linkList getVertexs() {
         return vertexs;
     }
 
     /**
      * @param vertexs the vertexs to set
      */
-    public void setVertexs(arrayList vertexs) {
+    public void setVertexs(linkList vertexs) {
         this.vertexs = vertexs;
     }
 
@@ -55,18 +59,19 @@ public class Graph {
     public void setColumns(int columns) {
         this.columns = columns;
     }
-    
+
     /**
-     * Crea un nuevo grafo
-     * @param rows la cantidad de filas que tendra el grafo
-     * @param columns la cantidad de columnas que tendra el grafo
+     * Constructor del grafo
+     * @param rows filas que tendra el laberinto
+     * @param columns columnas que tendra el laberinto
+     * Se llama a addVertex para automaticamente rellenar la lista con los vertices segun la cantidad necesaria
      */
     
     public Graph(int rows, int columns) {
         if(rows > columns){
-            this.vertexs = new arrayList(rows);
+            this.vertexs = new linkList(rows);
         }else{
-            this.vertexs = new arrayList (columns);
+            this.vertexs = new linkList(columns);
         }
         this.rows = rows;
         this.columns = columns;
@@ -74,66 +79,73 @@ public class Graph {
     }
     
     /**
-     * Añade vertices automaticamente al grafo segun la cantidad de filas o columnas, la que sea mas grande
+     * Insertar vertices, se inserta la cantidad necesaria de vertices
      */
     
     public void addVertex(){
-        for(int i = 0; i < this.vertexs.getArray().length; i++){
+        for(int i = 0; i < this.vertexs.getlMax(); i++){
             char key = (char) (i + 65);
-            Node aux = new Node(key, "L");
-            linkList auxList = new linkList();
-            auxList.insertStart(aux);
-            Node auxArray = new Node(auxList, "A");
-            vertexs.insertEnd(auxArray);
+            Node aux = new Node(key);
+            this.vertexs.insertEnd(aux);
         }
     }
-    
+        
     /**
-     * Muestra los vertices del grafo pero sin sus adyacencias
+     * Imprimir grafo
+     * @return String que contendra cada vertice con sus caminos correspondientes
      */
     
-    public void printGraph(){
-        int i = this.vertexs.getaFirst();
-        while(i != -1){
-            linkList aux = linkList.class.cast(this.vertexs.getArray()[i].getData());
-            System.out.println(aux.getlFirst().getData());
-            i = (int) this.vertexs.getArray()[i].getpNext();
-        }
-    }
-    
-    /**
-     * Verifica la existencia de una adyacencia
-     * @param vertex Lista de adyacencia para el vertice seleccionado
-     * @param target vertice a verificar si es adyacente
-     * @return Retorna si ya existe la adyacencia
-     */
-    
-    public boolean edgeExists(linkList vertex, int target){
-        Node aux = Node.class.cast(vertex.getlFirst());
-        char auxChar = (char) (target + 65);
-        for(int i = 0; i < vertex.getlSize(); i++){
-            if((char)aux.getData() == auxChar){
-                return true;
+    public String printGraph(){
+        if(!this.vertexs.isEmpty()){
+            String data = "";
+            Node vert = this.vertexs.getlFirst();
+            Node aux = vert.getpNext();
+            for(int i = 0; i < this.vertexs.getlSize(); i++){
+                data += vert.getData();
+                while(aux != null){
+                    data += " --> " + aux.getData();
+                    aux = aux.getpNext();}
+                vert = vert.getpVert();
+                if(vert != null){
+                    aux = vert.getpNext();}
+                data += "\n";
                 }
-            aux = Node.class.cast(aux.getpNext());
-            }
+            return data;
+        }else{
+            return "El grafo esta vacio";}
+    }
+        
+    /**
+     * Verificacion de la existencia de una arista
+     * @param origin Vertice origen
+     * @param target Vertice al que apunta el origen
+     * @return la existencia de la arista
+     */
+    
+    public boolean edgeExists(char origin, char target){
+        Node vert = this.vertexs.searchVertex(origin);
+        while(vert.getpNext() != null){
+            vert = vert.getpNext();
+            if((char) vert.getData() == target){
+                return true;}
+        }
         return false;}
     
     /**
-     * Inserta una adyacencia al vertice seleccionado
-     * @param origin vertice al cual se le insertara la adyacencia o arista
-     * @param target vertice a insertar para adyacencia
+     * Insertar arista/adyacencia
+     * @param origin El vertice de origen
+     * @param target El vertice que apuntara el origen
      */
     
-    public void addEdge(int origin, int target){
-        linkList aux = linkList.class.cast(this.vertexs.getArray()[origin].getData());
-        char key = (char) (target + 65);
-        Node auxNode = new Node(key, "L");
-        if(!edgeExists(aux, target)){
-            aux.insertEnd(auxNode);
-        }else{
-            System.out.println("Ya existe la arista");}
+    public void addEdge(char origin, char target){
+        if(!this.vertexs.isEmpty()){
+            Node aux = new Node(target);
+            Node vert = this.vertexs.searchVertex(origin);
+            while(vert.getpNext() != null){
+                vert = vert.getpNext();}
+            vert.setpNext(aux);
         }
     }
-    
+}
+
 
