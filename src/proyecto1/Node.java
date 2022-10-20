@@ -17,6 +17,7 @@ public class Node<T> {
     private T data;
     private Node pNext;
     private Node pVert;
+    private int adjAmount;
 
     /**
      * @return the data
@@ -69,7 +70,22 @@ public class Node<T> {
         this.data = data;
         this.pNext = null;
         this.pVert = null;
+        this.adjAmount = 0;
     }    
+
+    /**
+     * @return the adjAmount
+     */
+    public int getAdjAmount() {
+        return adjAmount;
+    }
+
+    /**
+     * @param adjAmount the adjAmount to set
+     */
+    public void setAdjAmount(int adjAmount) {
+        this.adjAmount = adjAmount;
+    }
     
     
 }

@@ -139,12 +139,15 @@ public class Graph {
     
     public void addEdge(char origin, char target){
         if(!this.vertexs.isEmpty()){
-            Node aux = new Node(target);
             Node vert = this.vertexs.searchVertex(origin);
-            while(vert.getpNext() != null){
-                vert = vert.getpNext();}
-            vert.setpNext(aux);
-        }
+            if(!edgeExists(origin, target) && vert.getAdjAmount() < this.columns){
+                Node aux = new Node(target);
+                vert.setAdjAmount(vert.getAdjAmount() + 1);
+                while(vert.getpNext() != null){
+                    vert = vert.getpNext();}
+                vert.setpNext(aux);
+                addEdge(target, origin);}
+    }
     }
 }
 
