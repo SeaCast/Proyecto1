@@ -7,16 +7,16 @@ package proyecto1;
 /**
  *
  * @author Sebastián
- * @version 19/10/2022
+ * @version 24/10/2022
  * @param data Dato del nodo 
  * @param pNext siguiente nodo
  * @param pVert siguiente adyacencia
  * 
  */
-public class Node<T> {
+public class NodeVertexs<T> {
     private T data;
-    private Node pNext;
-    private Node pVert;
+    private NodeVertexs pNext;
+    private NodeEdge pEdge;
     private int adjAmount;
 
     /**
@@ -36,29 +36,29 @@ public class Node<T> {
     /**
      * @return the pNext
      */
-    public Node getpNext() {
+    public NodeVertexs getpNext() {
         return pNext;
     }
 
     /**
      * @param pNext the pNext to set
      */
-    public void setpNext(Node pNext) {
+    public void setpNext(NodeVertexs pNext) {
         this.pNext = pNext;
     }
 
     /**
      * @return the pVert
      */
-    public Node getpVert() {
-        return pVert;
+    public NodeEdge getpEdge() {
+        return pEdge;
     }
 
     /**
      * @param pVert the pVert to set
      */
-    public void setpVert(Node pVert) {
-        this.pVert = pVert;
+    public void setpEdge(NodeEdge pEdge) {
+        this.pEdge = pEdge;
     }
 
     /**
@@ -66,10 +66,10 @@ public class Node<T> {
      * @param data Dato a ingresar
      */
     
-    public Node(T data) {
+    public NodeVertexs(T data) {
         this.data = data;
         this.pNext = null;
-        this.pVert = null;
+        this.pEdge = null;
         this.adjAmount = 0;
     }    
 

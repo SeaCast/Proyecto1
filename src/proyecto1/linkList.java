@@ -7,7 +7,7 @@ package proyecto1;
 /**
  * Clase de listas enlazadas
  * @author Sebastián
- * @version 19/10/2022
+ * @version 24/10/2022
  * @param lFirst Primer valor de la lista
  * @param lLast Ultimo valor de la lista
  * @param lSize Tamaño actual de la lista
@@ -15,36 +15,36 @@ package proyecto1;
  * 
  */
 public class linkList {
-    private Node lFirst;
-    private Node lLast;
+    private NodeVertexs lFirst;
+    private NodeVertexs lLast;
     private int lSize;
     private int lMax;
 
     /**
      * @return the lFirst
      */
-    public Node getlFirst() {
+    public NodeVertexs getlFirst() {
         return lFirst;
     }
 
     /**
      * @param lFirst the lFirst to set
      */
-    public void setlFirst(Node lFirst) {
+    public void setlFirst(NodeVertexs lFirst) {
         this.lFirst = lFirst;
     }
 
     /**
      * @return the lLast
      */
-    public Node getlLast() {
+    public NodeVertexs getlLast() {
         return lLast;
     }
 
     /**
      * @param lLast the lLast to set
      */
-    public void setlLast(Node lLast) {
+    public void setlLast(NodeVertexs lLast) {
         this.lLast = lLast;
     }
 
@@ -110,11 +110,11 @@ public class linkList {
      * @param data Nodo a insertar
      */
     
-    public void insertStart(Node data){
+    public void insertStart(NodeVertexs data){
         if(isEmpty()){
             this.lFirst = this.lLast = data;
         }else{
-            data.setpVert(this.lFirst);
+            data.setpNext(this.lFirst);
             this.lFirst = data;
         }
         this.lSize++;
@@ -125,11 +125,11 @@ public class linkList {
      * @param data Nodo a insertar
      */
     
-    public void insertEnd(Node data){
+    public void insertEnd(NodeVertexs data){
         if(isEmpty()){
             this.lFirst = this.lLast = data;
         }else{
-            this.lLast.setpVert(data);
+            this.lLast.setpNext(data);
             this.lLast = data;
         }
         this.lSize++;
@@ -140,10 +140,10 @@ public class linkList {
      * @return elemento elminado
      */
     
-    public Node delStart(){
+    public NodeVertexs delStart(){
         if(!isEmpty()){
-            Node aux = this.lFirst;
-            this.lFirst = this.lFirst.getpVert();
+            NodeVertexs aux = this.lFirst;
+            this.lFirst = this.lFirst.getpNext();
             return aux;
         }else{
             return null;
@@ -155,14 +155,14 @@ public class linkList {
      * @return elemento eliminado
      */
     
-    public Node delEnd(){
+    public NodeVertexs delEnd(){
         if(!isEmpty()){
-            Node aux = this.lFirst;
-            Node previousLast = this.lLast;
+            NodeVertexs aux = this.lFirst;
+            NodeVertexs previousLast = this.lLast;
             for(int i = 0; i < this.lSize - 1; i++){
-                aux = aux.getpVert();
+                aux = aux.getpNext();
             }
-            aux.setpVert(null);
+            aux.setpNext(null);
             this.lLast = aux;
             return previousLast;
         }else{
@@ -176,14 +176,14 @@ public class linkList {
      * @return Direccion del nodo buscado, sera null si no existe
      */
     
-    public Node searchVertex(char Target){
+    public NodeVertexs searchVertex(char Target){
         if(!isEmpty()){
-            Node aux = this.lFirst;
+            NodeVertexs aux = this.lFirst;
             for(int i = 0; i < this.lSize; i++){
                 if((char) aux.getData() == Target){
                     return aux;
             }else{
-                aux = aux.getpVert();}
+                aux = aux.getpNext();}
             }
         return null;}
         
