@@ -15,6 +15,7 @@ public class chooseMethod extends javax.swing.JFrame {
      */
     public chooseMethod() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -15,6 +15,7 @@ public class changeSize extends javax.swing.JFrame {
      */
     public changeSize() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

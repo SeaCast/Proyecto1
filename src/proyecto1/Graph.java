@@ -7,7 +7,7 @@ package proyecto1;
 /**
  *
  * @author Sebastián
- * @version 19/10/2022
+ * @version 24/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
  * @param columns columnas que tendra el laberinto
@@ -85,7 +85,7 @@ public class Graph {
     public void addVertex(){
         for(int i = 0; i < this.vertexs.getlMax(); i++){
             char key = (char) (i + 65);
-            Node aux = new Node(key);
+            NodeVertexs aux = new NodeVertexs(key);
             this.vertexs.insertEnd(aux);
         }
     }
@@ -98,16 +98,16 @@ public class Graph {
     public String printGraph(){
         if(!this.vertexs.isEmpty()){
             String data = "";
-            Node vert = this.vertexs.getlFirst();
-            Node aux = vert.getpNext();
+            NodeVertexs vert = this.vertexs.getlFirst();
+            NodeEdge aux = vert.getpEdge();
             for(int i = 0; i < this.vertexs.getlSize(); i++){
                 data += vert.getData();
                 while(aux != null){
                     data += " --> " + aux.getData();
-                    aux = aux.getpNext();}
-                vert = vert.getpVert();
+                    aux = aux.getpEdge();}
+                vert = vert.getpNext();
                 if(vert != null){
-                    aux = vert.getpNext();}
+                    aux = vert.getpEdge();}
                 data += "\n";
                 }
             return data;
@@ -123,11 +123,13 @@ public class Graph {
      */
     
     public boolean edgeExists(char origin, char target){
-        Node vert = this.vertexs.searchVertex(origin);
-        while(vert.getpNext() != null){
-            vert = vert.getpNext();
-            if((char) vert.getData() == target){
-                return true;}
+        NodeVertexs vert = this.vertexs.searchVertex(origin);
+        NodeEdge aux = vert.getpEdge();
+        while(aux != null){
+            if((char) aux.getData() == target){
+                return true;
+            }else{
+                aux = aux.getpEdge();}
         }
         return false;}
     
@@ -139,16 +141,19 @@ public class Graph {
     
     public void addEdge(char origin, char target){
         if(!this.vertexs.isEmpty()){
-            Node vert = this.vertexs.searchVertex(origin);
+            NodeVertexs vert = this.vertexs.searchVertex(origin);
+            NodeEdge auxEdge = vert.getpEdge();
             if(!edgeExists(origin, target) && vert.getAdjAmount() < this.columns){
-                Node aux = new Node(target);
+                NodeEdge aux = new NodeEdge(target);
                 vert.setAdjAmount(vert.getAdjAmount() + 1);
-                while(vert.getpNext() != null){
-                    vert = vert.getpNext();}
-                vert.setpNext(aux);
+                
+                if(auxEdge == null){
+                    vert.setpEdge(aux);
+                }else{
+                    while(aux.getpEdge() != null){
+                        auxEdge = auxEdge.getpEdge();}
+                    auxEdge.setpEdge(aux);}
                 addEdge(target, origin);}
-    }
-    }
+                }
+            }
 }
-
-
