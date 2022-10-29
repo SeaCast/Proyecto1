@@ -4,6 +4,8 @@
  */
 package proyecto1;
 
+import Interfaces.MainMenu;
+
 /**
  *
  * @author Sebastián Castillo, Martin Urdaneta, Yargen Gonzalez 
@@ -14,9 +16,7 @@ public class Proyecto1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        MenuPrincipal test = new MenuPrincipal();
-        test.setVisible(true);
+        MainMenu test = new MainMenu();
         
     }
     /*
