@@ -119,23 +119,25 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="labyrinthDisplay">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Laberinto Aca"/>
-              </Properties>
-            </Component>
+            <Container class="javax.swing.JPanel" name="mazeDisplay">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                <Property name="columns" type="int" value="0"/>
+                <Property name="rows" type="int" value="1"/>
+              </Layout>
+            </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="solve">
+        <Component class="javax.swing.JButton" name="solveWallFollower">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Resolver"/>
+            <Property name="text" type="java.lang.String" value="Wall Follower"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="solveActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="solveWallFollowerActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="360" width="370" height="-1"/>
+              <AbsoluteConstraints x="20" y="290" width="350" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -152,7 +154,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="timeTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tiempo de solucion:"/>
           </Properties>
@@ -162,13 +164,23 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="time">
           <Properties>
             <Property name="text" type="java.lang.String" value="time"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="560" y="160" width="-1" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JLabel" name="solveTitle">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Metodos de solucion"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="140" y="260" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

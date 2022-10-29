@@ -100,6 +100,14 @@ public class Graph {
      * @return String que contendra cada vertice con sus caminos correspondientes
      */
     
+    /**
+     * Verifica si el grafo esta vacio
+     * @return estado del grafo
+     */
+    
+    public boolean isEmpty(){
+        return this.vertexs == null;}
+    
     public String printGraph(){
         if(!this.vertexs.isEmpty()){
             String data = "";
@@ -138,6 +146,17 @@ public class Graph {
         }
         return false;}
     
+    public NodeEdge searchEdge(char origin, char target){
+        NodeVertexs vert = this.vertexs.searchVertex(origin);
+        NodeEdge aux = vert.getpEdge();
+        while(aux != null){
+            if((char) aux.getData() == target){
+                return aux;
+            }else{
+                aux = aux.getpEdge();}
+        }
+        return null;}
+    
     /**
      * Insertar arista/adyacencia
      * @param origin El vertice de origen
@@ -155,7 +174,7 @@ public class Graph {
                 if(auxEdge == null){
                     vert.setpEdge(aux);
                 }else{
-                    while(aux.getpEdge() != null){
+                    while(auxEdge.getpEdge() != null){
                         auxEdge = auxEdge.getpEdge();}
                     auxEdge.setpEdge(aux);}
                 addEdge(target, origin);}

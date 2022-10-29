@@ -4,12 +4,16 @@
  */
 package Interfaces;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
+import java.awt.GridLayout;
 import proyecto1.linkList;
 import proyecto1.NodeEdge;
 import proyecto1.NodeVertexs;
 import proyecto1.Graph;
-
+import javax.swing.JLabel;
+import java.awt.Dimension;
+import javax.swing.BorderFactory;
 /**
  *
  * @author Sebastián
@@ -42,11 +46,12 @@ public class MainMenu extends javax.swing.JFrame {
         columns = new javax.swing.JLabel();
         rows = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        labyrinthDisplay = new javax.swing.JLabel();
-        solve = new javax.swing.JButton();
+        mazeDisplay = new javax.swing.JPanel();
+        solveWallFollower = new javax.swing.JButton();
         exit = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        timeTitle = new javax.swing.JLabel();
+        time = new javax.swing.JLabel();
+        solveTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -96,18 +101,18 @@ public class MainMenu extends javax.swing.JFrame {
         rows.setText("x");
         jPanel1.add(rows, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, -1, -1));
 
-        labyrinthDisplay.setText("Laberinto Aca");
-        jScrollPane1.setViewportView(labyrinthDisplay);
+        mazeDisplay.setLayout(new java.awt.GridLayout(1, 0));
+        jScrollPane1.setViewportView(mazeDisplay);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 350, 210));
 
-        solve.setText("Resolver");
-        solve.addActionListener(new java.awt.event.ActionListener() {
+        solveWallFollower.setText("Wall Follower");
+        solveWallFollower.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                solveActionPerformed(evt);
+                solveWallFollowerActionPerformed(evt);
             }
         });
-        jPanel1.add(solve, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 370, -1));
+        jPanel1.add(solveWallFollower, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 350, -1));
 
         exit.setText("Terminar");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -117,11 +122,14 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 360, -1, -1));
 
-        jLabel1.setText("Tiempo de solucion:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
+        timeTitle.setText("Tiempo de solucion:");
+        jPanel1.add(timeTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
 
-        jLabel2.setText("time");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, -1, -1));
+        time.setText("time");
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, -1, -1));
+
+        solveTitle.setText("Metodos de solucion");
+        jPanel1.add(solveTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -134,17 +142,18 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_newLabyrinthActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        System.out.println(laberinto.printGraph());
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
-    private void solveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveActionPerformed
-        if(laberinto.getVertexs() != null){
-        chooseMethod solveLabyrinth = new chooseMethod(this, laberinto);
-        this.setVisible(false);
+    private void solveWallFollowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveWallFollowerActionPerformed
+        if(!laberinto.isEmpty()){
+            chooseMethod solveLabyrinth = new chooseMethod(this, laberinto);
+            this.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
         }
-    }//GEN-LAST:event_solveActionPerformed
+    }//GEN-LAST:event_solveWallFollowerActionPerformed
 
     private void jPanel1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jPanel1PropertyChange
     /*nada*/
@@ -157,6 +166,45 @@ public class MainMenu extends javax.swing.JFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         rows.setText(Integer.toString(laberinto.getRows()));
         columns.setText(Integer.toString(laberinto.getColumns()));
+        if(!laberinto.isEmpty()){
+            mazeDisplay.setLayout(new GridLayout(0, laberinto.getColumns()));
+            linkList auxList = laberinto.getVertexs();
+            NodeVertexs auxVert = auxList.getlFirst();
+            for(int i = 0; i < laberinto.getRows(); i++){
+                for(int j = 0; j < laberinto.getColumns(); j++){
+                    NodeEdge auxEdge = laberinto.searchEdge((char) auxVert.getData(), (char) (j + 65));
+                    JLabel mazeSpace = new JLabel();
+                    mazeSpace.setHorizontalAlignment(JLabel.CENTER);
+                    mazeSpace.setPreferredSize(new Dimension(40, 40));
+                    if(auxEdge != null){
+                        char tag = auxEdge.geteTag();
+                        auxEdge = auxEdge.getpEdge();
+                        switch(tag) {
+                            case 'V':
+                                mazeSpace.setBackground(Color.blue);
+                                break;
+                            case 'E':
+                                mazeSpace.setBackground(Color.green);
+                                break;
+                            case 'S':
+                                mazeSpace.setBackground(Color.red);
+                                break;
+                            default:
+                                mazeSpace.setBackground(Color.white);
+                                break;
+                            }
+                    }else{
+                            mazeSpace.setBackground(Color.black);
+                        }
+                    mazeSpace.setOpaque(true);
+                    mazeSpace.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+                    mazeDisplay.add(mazeSpace);
+                    }
+                
+                auxVert = auxVert.getpNext();
+                }
+            }
+            
     }//GEN-LAST:event_formComponentShown
 
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
@@ -202,14 +250,15 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel columns;
     private javax.swing.JLabel columnsTitle;
     private javax.swing.JButton exit;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labyrinthDisplay;
+    private javax.swing.JPanel mazeDisplay;
     private javax.swing.JButton newLabyrinth;
     private javax.swing.JLabel rows;
     private javax.swing.JLabel rowsTitle;
-    private javax.swing.JButton solve;
+    private javax.swing.JLabel solveTitle;
+    private javax.swing.JButton solveWallFollower;
+    private javax.swing.JLabel time;
+    private javax.swing.JLabel timeTitle;
     // End of variables declaration//GEN-END:variables
 }
