@@ -7,7 +7,7 @@ package proyecto1;
 /**
  *
  * @author Sebastián
- * @version 24/10/2022
+ * @version 28/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
  * @param columns columnas que tendra el laberinto
@@ -67,7 +67,7 @@ public class Graph {
      * Se llama a addVertex para automaticamente rellenar la lista con los vertices segun la cantidad necesaria
      */
     
-    public Graph(int rows, int columns) {
+    public void createLabyrinth(int rows, int columns) {
         if(rows > columns){
             this.vertexs = new linkList(rows);
         }else{
@@ -76,6 +76,11 @@ public class Graph {
         this.rows = rows;
         this.columns = columns;
         addVertex();
+    }
+    
+    public Graph(){
+        this.vertexs = null;
+        this.rows = this.columns = 0;
     }
     
     /**

@@ -2,7 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyecto1;
+package Interfaces;
+
+import javax.swing.JOptionPane;
+import proyecto1.linkList;
+import proyecto1.NodeEdge;
+import proyecto1.NodeVertexs;
+import proyecto1.Graph;
 
 /**
  *
@@ -13,8 +19,16 @@ public class changeSize extends javax.swing.JFrame {
     /**
      * Creates new form changeSize
      */
-    public changeSize() {
+    
+    public static MainMenu w1;
+    public static Graph laberinto;
+    
+    public changeSize(MainMenu w1, Graph laberinto) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.w1 = w1;
+        this.laberinto = laberinto;
     }
 
     /**
@@ -27,8 +41,8 @@ public class changeSize extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        xColumns = new javax.swing.JTextField();
-        yRows = new javax.swing.JTextField();
+        xRows = new javax.swing.JTextField();
+        yColumns = new javax.swing.JTextField();
         Columns = new javax.swing.JLabel();
         Rows = new javax.swing.JLabel();
         windowTitle = new javax.swing.JLabel();
@@ -41,18 +55,18 @@ public class changeSize extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        xColumns.addActionListener(new java.awt.event.ActionListener() {
+        xRows.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xColumnsActionPerformed(evt);
+                xRowsActionPerformed(evt);
             }
         });
-        jPanel1.add(xColumns, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 40, 130, -1));
-        jPanel1.add(yRows, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 70, 130, -1));
+        jPanel1.add(xRows, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 40, 130, -1));
+        jPanel1.add(yColumns, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 70, 130, -1));
 
-        Columns.setText("Columnas:");
+        Columns.setText("Filas:");
         jPanel1.add(Columns, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        Rows.setText("Filas:");
+        Rows.setText("Columnas:");
         jPanel1.add(Rows, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         windowTitle.setText("Ingrese los nuevos valores");
@@ -64,20 +78,29 @@ public class changeSize extends javax.swing.JFrame {
                 goMenuActionPerformed(evt);
             }
         });
-        jPanel1.add(goMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
+        jPanel1.add(goMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 110));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void goMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goMenuActionPerformed
-        // TODO add your handling code here:
+        try{
+            int rows = Integer.parseInt(xRows.getText());
+            int columns = Integer.parseInt(yColumns.getText());
+            laberinto.createLabyrinth(rows, columns);
+            w1.setVisible(true);
+            this.dispose();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "Se ha producido un error, por favor verifique que solo se inserten numeros enteros en los campos\n " + e);
+            }
+
     }//GEN-LAST:event_goMenuActionPerformed
 
-    private void xColumnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xColumnsActionPerformed
+    private void xRowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xRowsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_xColumnsActionPerformed
+    }//GEN-LAST:event_xRowsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,7 +132,7 @@ public class changeSize extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new changeSize().setVisible(true);
+                new changeSize(w1, laberinto).setVisible(true);
             }
         });
     }
@@ -120,7 +143,7 @@ public class changeSize extends javax.swing.JFrame {
     private javax.swing.JButton goMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel windowTitle;
-    private javax.swing.JTextField xColumns;
-    private javax.swing.JTextField yRows;
+    private javax.swing.JTextField xRows;
+    private javax.swing.JTextField yColumns;
     // End of variables declaration//GEN-END:variables
 }
