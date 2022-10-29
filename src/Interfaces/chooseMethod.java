@@ -2,7 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyecto1;
+package Interfaces;
+
+import javax.swing.JOptionPane;
+import proyecto1.linkList;
+import proyecto1.NodeEdge;
+import proyecto1.NodeVertexs;
+import proyecto1.Graph;
 
 /**
  *
@@ -13,9 +19,16 @@ public class chooseMethod extends javax.swing.JFrame {
     /**
      * Creates new form selectSolution
      */
-    public chooseMethod() {
+    
+    public static MainMenu w1;
+    public static Graph laberinto;
+    
+    public chooseMethod(MainMenu w1, Graph laberinto) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.w1 = w1;
+        this.laberinto = laberinto;
     }
 
     /**
@@ -32,8 +45,11 @@ public class chooseMethod extends javax.swing.JFrame {
         selectWallFollower = new javax.swing.JButton();
         selectDepthFirstS = new javax.swing.JButton();
         selectBreadthFirstS = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -50,18 +66,26 @@ public class chooseMethod extends javax.swing.JFrame {
                 selectWallFollowerActionPerformed(evt);
             }
         });
-        jPanel1.add(selectWallFollower, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        jPanel1.add(selectWallFollower, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         selectDepthFirstS.setText("Depth First Search");
         selectDepthFirstS.setMaximumSize(new java.awt.Dimension(135, 22));
         selectDepthFirstS.setMinimumSize(new java.awt.Dimension(135, 22));
         selectDepthFirstS.setPreferredSize(new java.awt.Dimension(135, 22));
-        jPanel1.add(selectDepthFirstS, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
+        jPanel1.add(selectDepthFirstS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
 
         selectBreadthFirstS.setText("Breadth First Search");
-        jPanel1.add(selectBreadthFirstS, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, -1, -1));
+        jPanel1.add(selectBreadthFirstS, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 120));
+        exit.setText("Regresar");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 130));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -69,6 +93,11 @@ public class chooseMethod extends javax.swing.JFrame {
     private void selectWallFollowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectWallFollowerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_selectWallFollowerActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        w1.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,12 +130,13 @@ public class chooseMethod extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new chooseMethod().setVisible(true);
+                new chooseMethod(w1, laberinto).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton exit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel methodTitle;
     private javax.swing.JButton selectBreadthFirstS;
