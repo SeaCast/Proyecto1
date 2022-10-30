@@ -136,38 +136,10 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void newLabyrinthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newLabyrinthActionPerformed
-        changeSize newLabyrinth = new changeSize(this, laberinto);
-        this.setVisible(false);
-    }//GEN-LAST:event_newLabyrinthActionPerformed
-
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        System.out.println(laberinto.printGraph());
-        this.dispose();
-    }//GEN-LAST:event_exitActionPerformed
-
-    private void solveWallFollowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveWallFollowerActionPerformed
-        if(!laberinto.isEmpty()){
-            chooseMethod solveLabyrinth = new chooseMethod(this, laberinto);
-            this.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
-        }
-    }//GEN-LAST:event_solveWallFollowerActionPerformed
-
-    private void jPanel1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jPanel1PropertyChange
-    /*nada*/
-    }//GEN-LAST:event_jPanel1PropertyChange
-
-    private void jPanel1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel1ComponentShown
-    /*nada igual*/
-    }//GEN-LAST:event_jPanel1ComponentShown
-
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        rows.setText(Integer.toString(laberinto.getRows()));
-        columns.setText(Integer.toString(laberinto.getColumns()));
+    private void showLabyrinth(){
         if(!laberinto.isEmpty()){
             mazeDisplay.setLayout(new GridLayout(0, laberinto.getColumns()));
+            mazeDisplay.removeAll();
             linkList auxList = laberinto.getVertexs();
             NodeVertexs auxVert = auxList.getlFirst();
             for(int i = 0; i < laberinto.getRows(); i++){
@@ -205,6 +177,40 @@ public class MainMenu extends javax.swing.JFrame {
                 }
             }
             
+    } 
+    
+    
+    private void newLabyrinthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newLabyrinthActionPerformed
+        changeSize newLabyrinth = new changeSize(this, laberinto);
+        this.setVisible(false);
+    }//GEN-LAST:event_newLabyrinthActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        System.out.println(laberinto.printGraph());
+        this.dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void solveWallFollowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveWallFollowerActionPerformed
+        if(!laberinto.isEmpty()){
+            chooseMethod solveLabyrinth = new chooseMethod(this, laberinto);
+            this.setVisible(false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
+        }
+    }//GEN-LAST:event_solveWallFollowerActionPerformed
+
+    private void jPanel1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jPanel1PropertyChange
+    /*nada*/
+    }//GEN-LAST:event_jPanel1PropertyChange
+
+    private void jPanel1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel1ComponentShown
+    /*nada igual*/
+    }//GEN-LAST:event_jPanel1ComponentShown
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        rows.setText(Integer.toString(laberinto.getRows()));
+        columns.setText(Integer.toString(laberinto.getColumns()));
+        showLabyrinth();
     }//GEN-LAST:event_formComponentShown
 
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden

@@ -7,7 +7,7 @@ package proyecto1;
 /**
  *
  * @author Sebastián
- * @version 28/10/2022
+ * @version 30/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
  * @param columns columnas que tendra el laberinto
@@ -61,7 +61,7 @@ public class Graph {
     }
 
     /**
-     * Constructor del grafo
+     * Constructor del laberinto
      * @param rows filas que tendra el laberinto
      * @param columns columnas que tendra el laberinto
      * Se llama a addVertex para automaticamente rellenar la lista con los vertices segun la cantidad necesaria
@@ -77,6 +77,11 @@ public class Graph {
         this.columns = columns;
         addVertex();
     }
+    
+    /**
+     * Constructor del grafo
+     * Solo lo inicia
+     */
     
     public Graph(){
         this.vertexs = null;
@@ -95,10 +100,6 @@ public class Graph {
         }
     }
         
-    /**
-     * Imprimir grafo
-     * @return String que contendra cada vertice con sus caminos correspondientes
-     */
     
     /**
      * Verifica si el grafo esta vacio
@@ -107,6 +108,22 @@ public class Graph {
     
     public boolean isEmpty(){
         return this.vertexs == null;}
+    
+    /**
+     * Vaciar grafo
+     */
+    
+    public void empty(){
+        if(!this.isEmpty()){
+            this.rows = this.columns = 0;
+            this.vertexs = null;
+        }
+    }
+    
+    /**
+     * Imprimir grafo
+     * @return String que contendra cada vertice con sus caminos correspondientes
+     */
     
     public String printGraph(){
         if(!this.vertexs.isEmpty()){
@@ -167,7 +184,7 @@ public class Graph {
         if(!this.vertexs.isEmpty()){
             NodeVertexs vert = this.vertexs.searchVertex(origin);
             NodeEdge auxEdge = vert.getpEdge();
-            if(!edgeExists(origin, target) && vert.getAdjAmount() < this.columns){
+            if(!edgeExists(origin, target)){
                 NodeEdge aux = new NodeEdge(target);
                 vert.setAdjAmount(vert.getAdjAmount() + 1);
                 
