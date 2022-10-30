@@ -91,6 +91,7 @@ public class changeSize extends javax.swing.JFrame {
             int columns = Integer.parseInt(yColumns.getText());
             laberinto.empty();
             laberinto.createLabyrinth(rows, columns);
+            laberinto.randomizeEdges();
             w1.setVisible(true);
             this.dispose();
         }catch(Exception e){
