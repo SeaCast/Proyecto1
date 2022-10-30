@@ -11,7 +11,7 @@ package proyecto1;
 public class NodeEdge<T> {
     private T data;
     private NodeEdge pEdge;
-    private String eTag;
+    private char eTag;
 
     /**
      * @return the data
@@ -44,14 +44,18 @@ public class NodeEdge<T> {
     /**
      * @return the eTag
      */
-    public String geteTag() {
+    public char geteTag() {
         return eTag;
     }
 
+    public void seteTag(char eTag){
+        this.eTag = eTag;
+    }
+    
     public NodeEdge(T data) {
         this.data = data;
         this.pEdge = null;
-        this.eTag = null;
+        this.eTag = 'A';
     }
     
     

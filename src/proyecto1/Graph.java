@@ -7,7 +7,7 @@ package proyecto1;
 /**
  *
  * @author Sebastián
- * @version 28/10/2022
+ * @version 30/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
  * @param columns columnas que tendra el laberinto
@@ -61,7 +61,7 @@ public class Graph {
     }
 
     /**
-     * Constructor del grafo
+     * Constructor del laberinto
      * @param rows filas que tendra el laberinto
      * @param columns columnas que tendra el laberinto
      * Se llama a addVertex para automaticamente rellenar la lista con los vertices segun la cantidad necesaria
@@ -77,6 +77,11 @@ public class Graph {
         this.columns = columns;
         addVertex();
     }
+    
+    /**
+     * Constructor del grafo
+     * Solo lo inicia
+     */
     
     public Graph(){
         this.vertexs = null;
@@ -95,6 +100,26 @@ public class Graph {
         }
     }
         
+    
+    /**
+     * Verifica si el grafo esta vacio
+     * @return estado del grafo
+     */
+    
+    public boolean isEmpty(){
+        return this.vertexs == null;}
+    
+    /**
+     * Vaciar grafo
+     */
+    
+    public void empty(){
+        if(!this.isEmpty()){
+            this.rows = this.columns = 0;
+            this.vertexs = null;
+        }
+    }
+    
     /**
      * Imprimir grafo
      * @return String que contendra cada vertice con sus caminos correspondientes
@@ -138,6 +163,17 @@ public class Graph {
         }
         return false;}
     
+    public NodeEdge searchEdge(char origin, char target){
+        NodeVertexs vert = this.vertexs.searchVertex(origin);
+        NodeEdge aux = vert.getpEdge();
+        while(aux != null){
+            if((char) aux.getData() == target){
+                return aux;
+            }else{
+                aux = aux.getpEdge();}
+        }
+        return null;}
+    
     /**
      * Insertar arista/adyacencia
      * @param origin El vertice de origen
@@ -148,14 +184,14 @@ public class Graph {
         if(!this.vertexs.isEmpty()){
             NodeVertexs vert = this.vertexs.searchVertex(origin);
             NodeEdge auxEdge = vert.getpEdge();
-            if(!edgeExists(origin, target) && vert.getAdjAmount() < this.columns){
+            if(!edgeExists(origin, target)){
                 NodeEdge aux = new NodeEdge(target);
                 vert.setAdjAmount(vert.getAdjAmount() + 1);
                 
                 if(auxEdge == null){
                     vert.setpEdge(aux);
                 }else{
-                    while(aux.getpEdge() != null){
+                    while(auxEdge.getpEdge() != null){
                         auxEdge = auxEdge.getpEdge();}
                     auxEdge.setpEdge(aux);}
                 addEdge(target, origin);}
