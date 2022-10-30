@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package proyecto1;
-
+import java.util.Random;
 /**
  *
- * @author Sebastián
+ * @author Sebastián, Yargen
  * @version 28/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
@@ -76,6 +76,20 @@ public class Graph {
         this.rows = rows;
         this.columns = columns;
         addVertex();
+    }
+    /**
+     * Conecta los vertices generados en el grafo de manera aleatoria
+     */ 
+    
+    public void randomizeEdges(){
+        Random rnd = new Random();
+        for (int i = 0; i < this.vertexs.getlSize(); i++) {
+            NodeVertexs nodoaux = this.vertexs.searchVertex((char)(i+65));
+            for (int j=0; j < this.vertexs.getlSize(); j++){
+                int random = (rnd.nextInt(this.vertexs.getlSize()));
+                addEdge((char)nodoaux.getData(), ((char)(random + 65)));
+            }
+        }
     }
     
     public Graph(){
@@ -148,7 +162,7 @@ public class Graph {
         if(!this.vertexs.isEmpty()){
             NodeVertexs vert = this.vertexs.searchVertex(origin);
             NodeEdge auxEdge = vert.getpEdge();
-            if(!edgeExists(origin, target) && vert.getAdjAmount() < this.columns){
+            if(!edgeExists(origin, target)){
                 NodeEdge aux = new NodeEdge(target);
                 vert.setAdjAmount(vert.getAdjAmount() + 1);
                 
