@@ -8,7 +8,7 @@ import Interfaces.MainMenu;
 /**
  *
  * @author Sebastián, Yargen
- * @version 28/10/2022
+ * @version 30/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
  * @param columns columnas que tendra el laberinto
@@ -213,6 +213,25 @@ public class Graph {
                 }
             }
     
+    public NodeEdge searchEntrance(char tag){
+        NodeVertexs auxVert = this.vertexs.getlFirst();
+        for(int i = 0; i < this.vertexs.getlSize(); i++){
+            NodeEdge auxEdge = auxVert.getpEdge();
+            for(int j = 0; j < auxVert.getAdjAmount(); j++){
+                if(auxEdge.geteTag() == 'E'){
+                    return auxEdge;}
+                auxEdge = auxEdge.getpEdge();
+                }
+            auxVert = auxVert.getpNext();
+        }
+        return null;}
+    
+    /**
+     * 
+     * @param entrance Vertice entrada
+     * @return si se encontro la salida
+     */
+    
     public boolean breadthFS(NodeEdge entrance){
         Queue edgeQueue = new Queue();
         NodeVertexs auxVert = this.vertexs.searchVertex((char) entrance.getData());
@@ -225,6 +244,7 @@ public class Graph {
          
         while(!edgeQueue.isEmpty()){
             auxEdge = edgeQueue.dequeue();
+            auxEdge = this.searchEdge(auxEdge.geteOrigin(), (char) auxEdge.getData());
             if(auxEdge.geteTag() == 'S'){
                 foundExit = true;
                 return foundExit;
@@ -234,10 +254,13 @@ public class Graph {
                 auxEdge.seteTag('V');
                 auxVert = this.vertexs.searchVertex((char) auxEdge.getData());
                 auxEdge = auxVert.getpEdge();
-                for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
-                    edgeQueue.enqueue(auxEdge);
+                for(int i = 0; i < auxVert.getAdjAmount(); i++){
+                    if(auxEdge.geteTag() != 'V'){
+                        edgeQueue.enqueue(auxEdge);}
                     auxEdge = auxEdge.getpEdge();}
             }
         }
         return foundExit;}
+    
+    
 }
