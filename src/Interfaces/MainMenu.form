@@ -130,7 +130,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="solveWallFollower">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Wall Follower"/>
+            <Property name="text" type="java.lang.String" value="Recargar laberinto"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="solveWallFollowerActionPerformed"/>
