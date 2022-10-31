@@ -102,50 +102,14 @@ public class Graph {
         this.rows = this.columns = 0;
     }
     
-    /**
-     * Insertar vertices, se inserta la cantidad necesaria de vertices
-     */
-    
-    /**
-     * Constructor del grafo
-     * @param rows filas que tendra el laberinto
-     * @param columns columnas que tendra el laberinto
-     * Se llama a addVertex para automaticamente rellenar la lista con los vertices segun la cantidad necesaria
-     */
-    
-    public void createLabyrinth(int rows, int columns) {
-        if(rows > columns){
-            this.vertexs = new linkList(rows);
-        }else{
-            this.vertexs = new linkList(columns);
-        }
-        this.rows = rows;
-        this.columns = columns;
-        addVertex();
-    }
-    /**
-     * Conecta los vertices generados en el grafo de manera aleatoria
-     */ 
-    
-    public void randomizeEdges(){
-        Random rnd = new Random();
-        for (int i = 0; i < this.vertexs.getlSize(); i++) {
-            NodeVertexs nodoaux = this.vertexs.searchVertex((char)(i+65));
-            for (int j=0; j < this.vertexs.getlSize(); j++){
-                int random = (rnd.nextInt(this.vertexs.getlSize()));
-                addEdge((char)nodoaux.getData(), ((char)(random + 65)));
-            }
-        }
-    }
-    
-    
+
     /**
      * Constructor del MST
      * @param graph el grafo aleatorio
      * @param V filas (o vertices) que tendra el laberinto
      */
     
-    void primMST(Graph graph , int V)
+    public void primMST(Graph graph , int V)
     {
         //Arreglo para construir MST
         int parent[] = new int[V];

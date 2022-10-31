@@ -92,6 +92,7 @@ public class changeSize extends javax.swing.JFrame {
             laberinto.empty();
             laberinto.createLabyrinth(rows, columns);
             laberinto.randomizeEdges();
+            laberinto.primMST(laberinto, rows);
             w1.setVisible(true);
             this.dispose();
         }catch(Exception e){
