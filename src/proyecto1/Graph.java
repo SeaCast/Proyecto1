@@ -7,7 +7,7 @@ import java.util.Random;
 import Interfaces.MainMenu;
 /**
  *
- * @author Sebastián, Yargen
+ * @author Sebastián, Yargen, Martin
  * @version 30/10/2022
  * @param vertexs Lista enlazada que contiene los vertices, adicionalmente cada vertice apuntara a sus adyacencias
  * @param rows filas que tendra el laberinto
@@ -262,5 +262,50 @@ public class Graph {
         }
         return foundExit;}
     
+    /**
+     * Constructor del MST
+     * @param graph el grafo aleatorio
+     * @param V filas (o vertices) que tendra el laberinto
+     */
     
+    public void primMST(Graph graph , int V)
+    {
+        //Arreglo para construir MST
+        int parent[] = new int[V];
+ 
+        // Valores de las aristas
+        int key[] = new int[V];
+ 
+        // Los vertices ya recorridos
+        Boolean mstSet[] = new Boolean[V];
+ 
+        // Se inicializan todas las aristas a infinito para conseguir las adyacentes
+        for (int i = 0; i < V; i++) {
+            key[i] = Integer.MAX_VALUE;
+            mstSet[i] = false;
+        }
+ 
+        // Se incluye primero la primera arista en el MST
+        key[0] = 0; //Se hace 0 para tomarlo de primero
+        parent[0] = -1; // Primer nodo siempre es el comienzo de MST
+ 
+        // MST siempre tendra Rows de vertices (V)
+        for (int count = 0; count < V - 1; count++) {
+         
+            int u = 0;
+ 
+            // Se toma el vertice para el MST
+            mstSet[u] = true;
+ 
+            // Se consideran ahora los vertices que no estan en MST y son adyacentes
+            for (int v = 0; v < V; v++)
+ 
+                if (graph.getRows() != 0 && mstSet[v] == false
+                    && graph.getColumns() < key[v]) {
+                    parent[v] = u;
+                    this.vertexs.insertEnd(this.vertexs.searchVertex((char)(u+65)));
+                    this.vertexs.delStart();
+                }
+        }
+    }
 }
