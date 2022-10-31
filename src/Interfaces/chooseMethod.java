@@ -42,9 +42,6 @@ public class chooseMethod extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         methodTitle = new javax.swing.JLabel();
-        selectWallFollower = new javax.swing.JButton();
-        selectDepthFirstS = new javax.swing.JButton();
-        selectBreadthFirstS = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,28 +51,8 @@ public class chooseMethod extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        methodTitle.setText("Seleccione el metodo de solución");
-        jPanel1.add(methodTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
-
-        selectWallFollower.setText("Wall Follower");
-        selectWallFollower.setMaximumSize(new java.awt.Dimension(135, 22));
-        selectWallFollower.setMinimumSize(new java.awt.Dimension(135, 22));
-        selectWallFollower.setPreferredSize(new java.awt.Dimension(135, 22));
-        selectWallFollower.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectWallFollowerActionPerformed(evt);
-            }
-        });
-        jPanel1.add(selectWallFollower, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
-
-        selectDepthFirstS.setText("Depth First Search");
-        selectDepthFirstS.setMaximumSize(new java.awt.Dimension(135, 22));
-        selectDepthFirstS.setMinimumSize(new java.awt.Dimension(135, 22));
-        selectDepthFirstS.setPreferredSize(new java.awt.Dimension(135, 22));
-        jPanel1.add(selectDepthFirstS, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
-
-        selectBreadthFirstS.setText("Breadth First Search");
-        jPanel1.add(selectBreadthFirstS, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, -1, -1));
+        methodTitle.setText("Presione regresar para recargar el laberinto");
+        jPanel1.add(methodTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, -1));
 
         exit.setText("Regresar");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -83,16 +60,12 @@ public class chooseMethod extends javax.swing.JFrame {
                 exitActionPerformed(evt);
             }
         });
-        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 130));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void selectWallFollowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectWallFollowerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_selectWallFollowerActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         w1.setVisible(true);
@@ -139,8 +112,5 @@ public class chooseMethod extends javax.swing.JFrame {
     private javax.swing.JButton exit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel methodTitle;
-    private javax.swing.JButton selectBreadthFirstS;
-    private javax.swing.JButton selectDepthFirstS;
-    private javax.swing.JButton selectWallFollower;
     // End of variables declaration//GEN-END:variables
 }

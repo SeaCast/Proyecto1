@@ -109,7 +109,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 350, 210));
 
-        solveWallFollower.setText("Wall Follower");
+        solveWallFollower.setText("Recargar laberinto");
         solveWallFollower.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 solveWallFollowerActionPerformed(evt);
@@ -197,45 +197,14 @@ public class MainMenu extends javax.swing.JFrame {
             }
     } 
     
-    public boolean breadthFS(NodeEdge entrance){
-        Queue edgeQueue = new Queue();
-        NodeVertexs auxVert = laberinto.getVertexs().searchVertex((char) entrance.getData());
-        NodeEdge auxEdge = auxVert.getpEdge();
-        boolean foundExit = false;
-        for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
-            edgeQueue.enqueue(auxEdge);
-            auxEdge = auxEdge.getpEdge();
-        }
-         
-        while(!edgeQueue.isEmpty()){
-            auxEdge = edgeQueue.dequeue();
-            auxEdge = laberinto.searchEdge(auxEdge.geteOrigin(), (char) auxEdge.getData());
-            if(auxEdge.geteTag() == 'S'){
-                foundExit = true;
-                showLabyrinth();
-                return foundExit;
-            }else if(auxEdge.geteTag() == 'V' || auxEdge.geteTag() == 'E'){
-                continue;
-            }else{
-                auxEdge.seteTag('V');
-                auxVert = laberinto.getVertexs().searchVertex((char) auxEdge.getData());
-                auxEdge = auxVert.getpEdge();
-                for(int i = 0; i < auxVert.getAdjAmount(); i++){
-                    edgeQueue.enqueue(auxEdge);
-                    auxEdge = auxEdge.getpEdge();}
-            }
-        }
-        showLabyrinth();
-        return foundExit;}
-    
-    
     private void newLabyrinthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newLabyrinthActionPerformed
         changeSize newLabyrinth = new changeSize(this, laberinto);
         this.setVisible(false);
     }//GEN-LAST:event_newLabyrinthActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        System.out.println(laberinto.printGraph());
+        if(!laberinto.isEmpty()){
+            System.out.println(laberinto.printGraph());}
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
@@ -268,14 +237,18 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void solveBreadthFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveBreadthFirstActionPerformed
         if(!laberinto.isEmpty()){
-            NodeVertexs auxVert = laberinto.getVertexs().getlFirst();
-            NodeEdge auxEdge = auxVert.getpEdge();
-            auxEdge.seteTag('E');
-            NodeVertexs auxVertice = laberinto.getVertexs().getlLast();
-            NodeEdge auxArista = auxVertice.getpEdge();
-            auxArista.seteTag('S');
+            NodeEdge auxEdge = laberinto.searchEntrance('E');
             showLabyrinth();
-            boolean foundExit = breadthFS(auxEdge);
+            boolean foundExit = laberinto.breadthFS(auxEdge);
+            if(foundExit){
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(rootPane, "Se encontro una solucion");
+                this.setVisible(true);
+
+            }else{
+                this.setVisible(false);
+                JOptionPane.showMessageDialog(rootPane, "No se pudo encontrar una solucion");
+                this.setVisible(true);}
         }else{
             JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
         }
