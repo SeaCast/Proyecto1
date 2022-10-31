@@ -69,11 +69,13 @@ public class Queue {
         }
     
     public void enqueue(NodeEdge newNode){
+        NodeEdge auxEdge = new NodeEdge(newNode.getData(), newNode.geteOrigin());
+        auxEdge.seteTag(newNode.geteTag());
         if(this.isEmpty()){
-            this.head = this.tail = newNode;
+            this.head = this.tail = auxEdge;
         }else{
-            this.tail.setpEdge(newNode);
-            this.tail = newNode;
+            this.tail.setpEdge(auxEdge);
+            this.tail = auxEdge;
             }
         this.qSize++;
     }

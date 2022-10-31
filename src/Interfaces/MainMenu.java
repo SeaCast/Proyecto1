@@ -14,6 +14,7 @@ import proyecto1.Graph;
 import javax.swing.JLabel;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
+import proyecto1.Queue;
 /**
  *
  * @author Sebastián
@@ -52,6 +53,8 @@ public class MainMenu extends javax.swing.JFrame {
         timeTitle = new javax.swing.JLabel();
         time = new javax.swing.JLabel();
         solveTitle = new javax.swing.JLabel();
+        solveBreadthFirst = new javax.swing.JButton();
+        solveDepthFirst = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -131,6 +134,22 @@ public class MainMenu extends javax.swing.JFrame {
         solveTitle.setText("Metodos de solucion");
         jPanel1.add(solveTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
 
+        solveBreadthFirst.setText("Breadth First Search");
+        solveBreadthFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solveBreadthFirstActionPerformed(evt);
+            }
+        });
+        jPanel1.add(solveBreadthFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 350, -1));
+
+        solveDepthFirst.setText("Depth First Search");
+        solveDepthFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                solveDepthFirstActionPerformed(evt);
+            }
+        });
+        jPanel1.add(solveDepthFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 350, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -176,8 +195,38 @@ public class MainMenu extends javax.swing.JFrame {
                 auxVert = auxVert.getpNext();
                 }
             }
-            
     } 
+    
+    public boolean breadthFS(NodeEdge entrance){
+        Queue edgeQueue = new Queue();
+        NodeVertexs auxVert = laberinto.getVertexs().searchVertex((char) entrance.getData());
+        NodeEdge auxEdge = auxVert.getpEdge();
+        boolean foundExit = false;
+        for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
+            edgeQueue.enqueue(auxEdge);
+            auxEdge = auxEdge.getpEdge();
+        }
+         
+        while(!edgeQueue.isEmpty()){
+            auxEdge = edgeQueue.dequeue();
+            auxEdge = laberinto.searchEdge(auxEdge.geteOrigin(), (char) auxEdge.getData());
+            if(auxEdge.geteTag() == 'S'){
+                foundExit = true;
+                showLabyrinth();
+                return foundExit;
+            }else if(auxEdge.geteTag() == 'V' || auxEdge.geteTag() == 'E'){
+                continue;
+            }else{
+                auxEdge.seteTag('V');
+                auxVert = laberinto.getVertexs().searchVertex((char) auxEdge.getData());
+                auxEdge = auxVert.getpEdge();
+                for(int i = 0; i < auxVert.getAdjAmount(); i++){
+                    edgeQueue.enqueue(auxEdge);
+                    auxEdge = auxEdge.getpEdge();}
+            }
+        }
+        showLabyrinth();
+        return foundExit;}
     
     
     private void newLabyrinthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newLabyrinthActionPerformed
@@ -216,6 +265,33 @@ public class MainMenu extends javax.swing.JFrame {
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
     /*probando*/
     }//GEN-LAST:event_formComponentHidden
+
+    private void solveBreadthFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveBreadthFirstActionPerformed
+        if(!laberinto.isEmpty()){
+            NodeVertexs auxVert = laberinto.getVertexs().getlFirst();
+            NodeEdge auxEdge = auxVert.getpEdge();
+            auxEdge.seteTag('E');
+            NodeVertexs auxVertice = laberinto.getVertexs().getlLast();
+            NodeEdge auxArista = auxVertice.getpEdge();
+            auxArista.seteTag('S');
+            showLabyrinth();
+            boolean foundExit = breadthFS(auxEdge);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
+        }
+    }//GEN-LAST:event_solveBreadthFirstActionPerformed
+
+    private void solveDepthFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveDepthFirstActionPerformed
+        if(!laberinto.isEmpty()){
+            NodeVertexs auxVert = laberinto.getVertexs().getlFirst();
+            NodeEdge auxEdge = auxVert.getpEdge();
+            auxEdge.seteTag('E');
+            NodeVertexs auxVertice = laberinto.getVertexs().getlLast();
+            NodeEdge auxArista = auxVertice.getpEdge();
+            auxArista.seteTag('S');
+            showLabyrinth();
+        }
+    }//GEN-LAST:event_solveDepthFirstActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +338,8 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton newLabyrinth;
     private javax.swing.JLabel rows;
     private javax.swing.JLabel rowsTitle;
+    private javax.swing.JButton solveBreadthFirst;
+    private javax.swing.JButton solveDepthFirst;
     private javax.swing.JLabel solveTitle;
     private javax.swing.JButton solveWallFollower;
     private javax.swing.JLabel time;

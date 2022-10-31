@@ -4,6 +4,7 @@
  */
 package proyecto1;
 import java.util.Random;
+import Interfaces.MainMenu;
 /**
  *
  * @author Sebastián, Yargen
@@ -199,7 +200,7 @@ public class Graph {
             NodeVertexs vert = this.vertexs.searchVertex(origin);
             NodeEdge auxEdge = vert.getpEdge();
             if(!edgeExists(origin, target)){
-                NodeEdge aux = new NodeEdge(target);
+                NodeEdge aux = new NodeEdge(target, origin);
                 vert.setAdjAmount(vert.getAdjAmount() + 1);
                 
                 if(auxEdge == null){
@@ -211,4 +212,32 @@ public class Graph {
                 addEdge(target, origin);}
                 }
             }
+    
+    public boolean breadthFS(NodeEdge entrance){
+        Queue edgeQueue = new Queue();
+        NodeVertexs auxVert = this.vertexs.searchVertex((char) entrance.getData());
+        NodeEdge auxEdge = auxVert.getpEdge();
+        boolean foundExit = false;
+        for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
+            edgeQueue.enqueue(auxEdge);
+            auxEdge = auxEdge.getpEdge();
+        }
+         
+        while(!edgeQueue.isEmpty()){
+            auxEdge = edgeQueue.dequeue();
+            if(auxEdge.geteTag() == 'S'){
+                foundExit = true;
+                return foundExit;
+            }else if(auxEdge.geteTag() == 'V' || auxEdge.geteTag() == 'E'){
+                continue;
+            }else{
+                auxEdge.seteTag('V');
+                auxVert = this.vertexs.searchVertex((char) auxEdge.getData());
+                auxEdge = auxVert.getpEdge();
+                for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
+                    edgeQueue.enqueue(auxEdge);
+                    auxEdge = auxEdge.getpEdge();}
+            }
+        }
+        return foundExit;}
 }

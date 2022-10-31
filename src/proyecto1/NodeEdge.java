@@ -12,6 +12,7 @@ public class NodeEdge<T> {
     private T data;
     private NodeEdge pEdge;
     private char eTag;
+    private char eOrigin;
 
     /**
      * @return the data
@@ -52,10 +53,19 @@ public class NodeEdge<T> {
         this.eTag = eTag;
     }
     
-    public NodeEdge(T data) {
+    public char geteOrigin(){
+        return eOrigin;
+    }
+    
+    public void seteOrigin(char eOrigin){
+        this.eOrigin = eOrigin;
+    }
+    
+    public NodeEdge(T data, char eOrigin) {
         this.data = data;
         this.pEdge = null;
         this.eTag = 'A';
+        this.eOrigin = eOrigin;
     }
     
     
