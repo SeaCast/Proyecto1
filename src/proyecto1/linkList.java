@@ -15,36 +15,36 @@ package proyecto1;
  * 
  */
 public class linkList {
-    private NodeVertexs lFirst;
-    private NodeVertexs lLast;
+    private Vertex lFirst;
+    private Vertex lLast;
     private int lSize;
     private int lMax;
 
     /**
      * @return the lFirst
      */
-    public NodeVertexs getlFirst() {
+    public Vertex getlFirst() {
         return lFirst;
     }
 
     /**
      * @param lFirst the lFirst to set
      */
-    public void setlFirst(NodeVertexs lFirst) {
+    public void setlFirst(Vertex lFirst) {
         this.lFirst = lFirst;
     }
 
     /**
      * @return the lLast
      */
-    public NodeVertexs getlLast() {
+    public Vertex getlLast() {
         return lLast;
     }
 
     /**
      * @param lLast the lLast to set
      */
-    public void setlLast(NodeVertexs lLast) {
+    public void setlLast(Vertex lLast) {
         this.lLast = lLast;
     }
 
@@ -110,11 +110,11 @@ public class linkList {
      * @param data Nodo a insertar
      */
     
-    public void insertStart(NodeVertexs data){
+    public void insertStart(Vertex data){
         if(isEmpty()){
             this.lFirst = this.lLast = data;
         }else{
-            data.setpNext(this.lFirst);
+            data.setvNext(this.lFirst);
             this.lFirst = data;
         }
         this.lSize++;
@@ -125,11 +125,11 @@ public class linkList {
      * @param data Nodo a insertar
      */
     
-    public void insertEnd(NodeVertexs data){
+    public void insertEnd(Vertex data){
         if(isEmpty()){
             this.lFirst = this.lLast = data;
         }else{
-            this.lLast.setpNext(data);
+            this.lLast.setvNext(data);
             this.lLast = data;
         }
         this.lSize++;
@@ -140,10 +140,10 @@ public class linkList {
      * @return elemento elminado
      */
     
-    public NodeVertexs delStart(){
+    public Vertex delStart(){
         if(!isEmpty()){
-            NodeVertexs aux = this.lFirst;
-            this.lFirst = this.lFirst.getpNext();
+            Vertex aux = this.lFirst;
+            this.lFirst = this.lFirst.getvNext();
             return aux;
         }else{
             return null;
@@ -155,14 +155,14 @@ public class linkList {
      * @return elemento eliminado
      */
     
-    public NodeVertexs delEnd(){
+    public Vertex delEnd(){
         if(!isEmpty()){
-            NodeVertexs aux = this.lFirst;
-            NodeVertexs previousLast = this.lLast;
+            Vertex aux = this.lFirst;
+            Vertex previousLast = this.lLast;
             for(int i = 0; i < this.lSize - 1; i++){
-                aux = aux.getpNext();
+                aux = aux.getvNext();
             }
-            aux.setpNext(null);
+            aux.setvNext(null);
             this.lLast = aux;
             return previousLast;
         }else{
@@ -176,14 +176,14 @@ public class linkList {
      * @return Direccion del nodo buscado, sera null si no existe
      */
     
-    public NodeVertexs searchVertex(char Target){
+    public Vertex searchVertex(char Target){
         if(!isEmpty()){
-            NodeVertexs aux = this.lFirst;
+            Vertex aux = this.lFirst;
             for(int i = 0; i < this.lSize; i++){
                 if((char) aux.getData() == Target){
                     return aux;
             }else{
-                aux = aux.getpNext();}
+                aux = aux.getvNext();}
             }
         return null;}
         

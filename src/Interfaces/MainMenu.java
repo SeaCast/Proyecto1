@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.GridLayout;
 import proyecto1.linkList;
 import proyecto1.NodeEdge;
-import proyecto1.NodeVertexs;
+import proyecto1.Vertex;
 import proyecto1.Graph;
 import javax.swing.JLabel;
 import java.awt.Dimension;
@@ -160,7 +160,7 @@ public class MainMenu extends javax.swing.JFrame {
             mazeDisplay.setLayout(new GridLayout(0, laberinto.getColumns()));
             mazeDisplay.removeAll();
             linkList auxList = laberinto.getVertexs();
-            NodeVertexs auxVert = auxList.getlFirst();
+            Vertex auxVert = auxList.getlFirst();
             for(int i = 0; i < laberinto.getRows(); i++){
                 for(int j = 0; j < laberinto.getColumns(); j++){
                     NodeEdge auxEdge = laberinto.searchEdge((char) auxVert.getData(), (char) (j + 65));
@@ -192,7 +192,7 @@ public class MainMenu extends javax.swing.JFrame {
                     mazeDisplay.add(mazeSpace);
                     }
                 
-                auxVert = auxVert.getpNext();
+                auxVert = auxVert.getvNext();
                 }
             }
     } 
@@ -236,31 +236,31 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentHidden
 
     private void solveBreadthFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveBreadthFirstActionPerformed
-        if(!laberinto.isEmpty()){
-            NodeEdge auxEdge = laberinto.searchEntrance('E');
-            showLabyrinth();
-            boolean foundExit = laberinto.breadthFS(auxEdge);
-            if(foundExit){
-                this.setVisible(false);
-                JOptionPane.showMessageDialog(rootPane, "Se encontro una solucion");
-                this.setVisible(true);
-
-            }else{
-                this.setVisible(false);
-                JOptionPane.showMessageDialog(rootPane, "No se pudo encontrar una solucion");
-                this.setVisible(true);}
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
-        }
+//        if(!laberinto.isEmpty()){
+//            NodeEdge auxEdge = laberinto.searchEntrance('E');
+//            showLabyrinth();
+//            boolean foundExit = laberinto.breadthFS(auxEdge);
+//            if(foundExit){
+//                this.setVisible(false);
+//                JOptionPane.showMessageDialog(rootPane, "Se encontro una solucion");
+//                this.setVisible(true);
+//
+//            }else{
+//                this.setVisible(false);
+//                JOptionPane.showMessageDialog(rootPane, "No se pudo encontrar una solucion");
+//                this.setVisible(true);}
+//        }else{
+//            JOptionPane.showMessageDialog(rootPane, "Se debe crear un laberinto antes de solucionarlo");
+//        }
     }//GEN-LAST:event_solveBreadthFirstActionPerformed
 
     private void solveDepthFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solveDepthFirstActionPerformed
         if(!laberinto.isEmpty()){
-            NodeVertexs auxVert = laberinto.getVertexs().getlFirst();
-            NodeEdge auxEdge = auxVert.getpEdge();
+            Vertex auxVert = laberinto.getVertexs().getlFirst();
+            NodeEdge auxEdge = auxVert.getpFirst();
             auxEdge.seteTag('E');
-            NodeVertexs auxVertice = laberinto.getVertexs().getlLast();
-            NodeEdge auxArista = auxVertice.getpEdge();
+            Vertex auxVertice = laberinto.getVertexs().getlLast();
+            NodeEdge auxArista = auxVertice.getpFirst();
             auxArista.seteTag('S');
             showLabyrinth();
         }

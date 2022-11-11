@@ -84,12 +84,35 @@ public class Graph {
     
     public void randomizeEdges(){
         Random rnd = new Random();
-        for (int i = 0; i < this.vertexs.getlSize(); i++) {
-            NodeVertexs nodoaux = this.vertexs.searchVertex((char)(i+65));
-            for (int j=0; j < this.vertexs.getlSize(); j++){
-                int random = (rnd.nextInt(this.vertexs.getlSize()));
-                addEdge((char)nodoaux.getData(), ((char)(random + 65)));
+        for (int i = 0; i < this.rows - 2; i++) {
+            Vertex vertAux = this.vertexs.searchVertex((char)(i+66));
+            for (int j=0; j < this.columns - 2; j++){
+                int random = (rnd.nextInt(this.columns - 2));
+                addEdge((char)vertAux.getData(), ((char)(random + 66)));
             }
+        }
+        if(this.rows < this.columns){
+            for(int i = this.rows; i < this.vertexs.getlSize(); i++){
+                columnLower(i, 0, 'R');}  
+        }else if(this.columns < this.rows){
+            for(int i = 0; i < this.vertexs.getlSize() - 2; i++){
+                columnLower(i, this.columns - 1, 'C');
+                for(int j = this.columns; j < this.vertexs.getlSize(); j++){
+                    columnLower(i, j, 'C');
+                }
+            }
+        }
+    }
+    
+    public void columnLower(int origin, int target, char key){
+        if(key == 'R'){
+            Vertex toClean = this.vertexs.searchVertex((char) (66 + origin - 2));
+            toClean.cleanRow();
+        }else{  
+            if(edgeExists((char) (66 + origin), (char) (65 + target))){
+                Vertex toClean = this.vertexs.searchVertex((char) (66 + origin));
+                toClean.removeColumn((char) (65 + target));
+        }
         }
     }
     
@@ -155,7 +178,7 @@ public class Graph {
     public void addVertex(){
         for(int i = 0; i < this.vertexs.getlMax(); i++){
             char key = (char) (i + 65);
-            NodeVertexs aux = new NodeVertexs(key);
+            Vertex aux = new Vertex(key);
             this.vertexs.insertEnd(aux);
         }
     }
@@ -188,16 +211,16 @@ public class Graph {
     public String printGraph(){
         if(!this.vertexs.isEmpty()){
             String data = "";
-            NodeVertexs vert = this.vertexs.getlFirst();
-            NodeEdge aux = vert.getpEdge();
+            Vertex vert = this.vertexs.getlFirst();
+            NodeEdge aux = vert.getpFirst();
             for(int i = 0; i < this.vertexs.getlSize(); i++){
                 data += vert.getData();
                 while(aux != null){
                     data += " --> " + aux.getData();
                     aux = aux.getpEdge();}
-                vert = vert.getpNext();
+                vert = vert.getvNext();
                 if(vert != null){
-                    aux = vert.getpEdge();}
+                    aux = vert.getpFirst();}
                 data += "\n";
                 }
             return data;
@@ -213,8 +236,8 @@ public class Graph {
      */
     
     public boolean edgeExists(char origin, char target){
-        NodeVertexs vert = this.vertexs.searchVertex(origin);
-        NodeEdge aux = vert.getpEdge();
+        Vertex vert = this.vertexs.searchVertex(origin);
+        NodeEdge aux = vert.getpFirst();
         while(aux != null){
             if((char) aux.getData() == target){
                 return true;
@@ -224,8 +247,8 @@ public class Graph {
         return false;}
     
     public NodeEdge searchEdge(char origin, char target){
-        NodeVertexs vert = this.vertexs.searchVertex(origin);
-        NodeEdge aux = vert.getpEdge();
+        Vertex vert = this.vertexs.searchVertex(origin);
+        NodeEdge aux = vert.getpFirst();
         while(aux != null){
             if((char) aux.getData() == target){
                 return aux;
@@ -242,70 +265,71 @@ public class Graph {
     
     public void addEdge(char origin, char target){
         if(!this.vertexs.isEmpty()){
-            NodeVertexs vert = this.vertexs.searchVertex(origin);
-            NodeEdge auxEdge = vert.getpEdge();
+            Vertex vert = this.vertexs.searchVertex(origin);
+            NodeEdge auxEdge = vert.getpFirst();
             if(!edgeExists(origin, target)){
                 NodeEdge aux = new NodeEdge(target, origin);
                 vert.setAdjAmount(vert.getAdjAmount() + 1);
                 
                 if(auxEdge == null){
-                    vert.setpEdge(aux);
+                    vert.insertEdge(aux);
                 }else{
                     while(auxEdge.getpEdge() != null){
                         auxEdge = auxEdge.getpEdge();}
-                    auxEdge.setpEdge(aux);}
-                addEdge(target, origin);}
+                    vert.insertEdge(aux);}
+                addEdge(target, origin);
                 }
             }
+    }
     
     public NodeEdge searchEntrance(char tag){
-        NodeVertexs auxVert = this.vertexs.getlFirst();
+        Vertex auxVert = this.vertexs.getlFirst();
         for(int i = 0; i < this.vertexs.getlSize(); i++){
-            NodeEdge auxEdge = auxVert.getpEdge();
+            NodeEdge auxEdge = auxVert.getpFirst();
             for(int j = 0; j < auxVert.getAdjAmount(); j++){
                 if(auxEdge.geteTag() == 'E'){
                     return auxEdge;}
                 auxEdge = auxEdge.getpEdge();
                 }
-            auxVert = auxVert.getpNext();
+            auxVert = auxVert.getvNext();
         }
         return null;}
     
-    /**
-     * 
-     * @param entrance Vertice entrada
-     * @return si se encontro la salida
-     */
-    
-    public boolean breadthFS(NodeEdge entrance){
-        Queue edgeQueue = new Queue();
-        NodeVertexs auxVert = this.vertexs.searchVertex((char) entrance.getData());
-        NodeEdge auxEdge = auxVert.getpEdge();
-        boolean foundExit = false;
-        for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
-            edgeQueue.enqueue(auxEdge);
-            auxEdge = auxEdge.getpEdge();
-        }
-         
-        while(!edgeQueue.isEmpty()){
-            auxEdge = edgeQueue.dequeue();
-            auxEdge = this.searchEdge(auxEdge.geteOrigin(), (char) auxEdge.getData());
-            if(auxEdge.geteTag() == 'S'){
-                foundExit = true;
-                return foundExit;
-            }else if(auxEdge.geteTag() == 'V' || auxEdge.geteTag() == 'E'){
-                continue;
-            }else{
-                auxEdge.seteTag('V');
-                auxVert = this.vertexs.searchVertex((char) auxEdge.getData());
-                auxEdge = auxVert.getpEdge();
-                for(int i = 0; i < auxVert.getAdjAmount(); i++){
-                    if(auxEdge.geteTag() != 'V'){
-                        edgeQueue.enqueue(auxEdge);}
-                    auxEdge = auxEdge.getpEdge();}
-            }
-        }
-        return foundExit;}
+//    /**
+//     * 
+//     * @param entrance Vertice entrada
+//     * @return si se encontro la salida
+//     */
+//    
+//    public boolean breadthFS(NodeEdge entrance){
+//        Queue edgeQueue = new Queue();
+//        NodeVertexs auxVert = this.vertexs.searchVertex((char) entrance.getData());
+//        NodeEdge auxEdge = auxVert.getpEdge();
+//        boolean foundExit = false;
+//        for(int i = 0; i < (auxVert.getAdjAmount() - 1); i++){
+//            edgeQueue.enqueue(auxEdge);
+//            auxEdge = auxEdge.getpEdge();
+//        }
+//         
+//        while(!edgeQueue.isEmpty()){
+//            auxEdge = edgeQueue.dequeue();
+//            auxEdge = this.searchEdge(auxEdge.geteOrigin(), (char) auxEdge.getData());
+//            if(auxEdge.geteTag() == 'S'){
+//                foundExit = true;
+//                return foundExit;
+//            }else if(auxEdge.geteTag() == 'V' || auxEdge.geteTag() == 'E'){
+//                continue;
+//            }else{
+//                auxEdge.seteTag('V');
+//                auxVert = this.vertexs.searchVertex((char) auxEdge.getData());
+//                auxEdge = auxVert.getpEdge();
+//                for(int i = 0; i < auxVert.getAdjAmount(); i++){
+//                    if(auxEdge.geteTag() != 'V'){
+//                        edgeQueue.enqueue(auxEdge);}
+//                    auxEdge = auxEdge.getpEdge();}
+//            }
+//        }
+//        return foundExit;}
     
     
 }
